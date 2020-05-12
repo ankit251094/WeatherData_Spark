@@ -1,0 +1,53 @@
+>>> file_path='/data/weather/2015'
+>>> inTextData1 = spark.read.format("csv").option("header", "true").option("delimiter","\t").load(file_path)
+19/11/29 18:24:04 WARN SharedInMemoryCache: Evicting cached table partition metadata from memory due to size constraints (spark.sql.hive.filesourcePartitionFileCacheSize = 262144000 bytes). This may impact query planning performance.
+>>> file_path='/data/weather/2016'
+>>> inTextData2= spark.read.format("csv").option("header", "true").option("delimiter","\t").load(file_path)
+>>> file_path='/data/weather/2017'
+>>> inTextData3= spark.read.format("csv").option("header", "true").option("delimiter","\t").load(file_path)
+>>> file_path='/data/weather/2018'
+>>> inTextData4= spark.read.format("csv").option("header", "true").option("delimiter","\t").load(file_path)
+>>> file_path='/data/weather/2019'
+>>> inTextData5= spark.read.format("csv").option("header", "true").option("delimiter","\t").load(file_path)
+>>> inTextData = inTextData1.union(inTextData2).union(inTextData3).union(inTextData4).union(inTextData5).distinct()
+>>> name_list = inTextData.schema.names
+>>> name_list = str(name_list).strip("['']").split(' ')
+>>> names = []
+>>> for item in name_list:
+...     if len(item)>0:
+...         names.append(item)
+...
+>>> rdd1 = inTextData.rdd
+>>> rdd2 = rdd1.map(lambda x: str(x).split('=')[1])
+>>> rdd3 = rdd2.map(lambda x: ' '.join(x.split()))
+>>> rdd4 = rdd3.map(lambda x: x[2:-2])
+>>> rdd4.saveAsTextFile('/user/pandeya/sparktest11'+'temp')
+ rdd4.saveAsTextFile('/user/pandeyao/sparktest11'+'temp')
+>>> newInData = spark.read.csv('/user/pandeyao/sparktest11temp',header=False,sep=' ')
+>>> cleanData = newInData.drop('_c1','_c4','_c6','_c8','_c10','_c12','_c14')
+>>> cleanData = cleanData.withColumnRenamed('_c0','STN').withColumnRenamed('_c2','YEARMODA')\
+...                     .withColumnRenamed('_c3','TEMP').withColumnRenamed('_c5','DEWP')\
+...                     .withColumnRenamed('_c7','SLP').withColumnRenamed('_c9','STP')\
+...                     .withColumnRenamed('_c11','VISIB').withColumnRenamed('_c13','WDSP')\
+...                     .withColumnRenamed('_c15','MXSPD').withColumnRenamed('_c16','GUST')\
+...                     .withColumnRenamed('_c17','MAX').withColumnRenamed('_c18','MIN')\
+...                     .withColumnRenamed('_c19','PRCP').withColumnRenamed('_c20','SNDP')\
+...                     .withColumnRenamed('_c21','FRSHTT')
+>>> cleanData.show()
+>>> cleanData1=cleanData.withColumn("MIN", split(col("MIN"), "\\*").getItem(0)).withColumn("col3", split(col("MIN"), "\\*").getItem(1))
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+NameError: name 'split' is not defined
+>>> from pyspark.sql.functions import col, split
+>>> cleanData1=cleanData.withColumn("MIN", split(col("MIN"), "\\*").getItem(0)).withColumn("col3", split(col("MIN"), "\\*").getItem(1))
+>>> cleanData1=cleanData1.withColumn("MAX", split(col("MAX"), "\\*").getItem(0)).withColumn("col3", split(col("MAX"), "\\*").getItem(1))
+>>> cleanData1.show()
+>>> cleanData1=cleanData1.drop('col2','col3')
+>>> cleanData1 = cleanData1.withColumn("MAX_NEW", cleanData1["MAX"].cast("double"))
+>>> cleanData1 = cleanData1.withColumn("MIN_NEW", cleanData1["MIN"].cast("double"))
+>>> cleanData1.show()
+>>> cleanData1=cleanData1.drop('MAX','MIN')
+cleanData1=cleanData1.withColumnRenamed("MAX_NEW","MAX")
+>>> cleanData1=cleanData1.withColumnRenamed("MIN_NEW","MIN")
+>>> cleanData1.show()
+cleanData1.createOrReplaceTempView("cleanData")

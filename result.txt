@@ -1,0 +1,221 @@
+1. Find hottest and coldest day along the station code and date for each year
+spark.sql("SELECT distinct(STN), LEFT(YEARMODA,4) as YEAR, RIGHT(YEARMODA,2) as DATE,MAX from cleanData where MAX = (Select MAX(MAX) from cleanData where MAX <>9999.9)and LEFT(YEARMODA,4)=2010").show()
++------+----+----+-----+
+|   STN|YEAR|DATE|  MAX|
++------+----+----+-----+
+|720667|2010|  23|132.8|
++------+----+----+-----+
+
+
+>>>  spark.sql("SELECT distinct(STN), LEFT(YEARMODA,4) as YEAR, RIGHT(YEARMODA,2) as DATE, MIN from cleanData where Min in (Select MIN(MIN) from cleanData where Min <>9999.9 and LEFT(YEARMODA,4)='2010') and LEFT(YEARMODA,4) ='2010' ").show()
++------+----+----+------+
+|   STN|YEAR|DATE|   MIN|
++------+----+----+------+
+|896060|2010|  02|-115.2|
++------+----+----+------+
+
+>>> spark.sql("SELECT distinct(STN), LEFT(YEARMODA,4) as YEAR, RIGHT(YEARMODA,2) as DATE, MAX from cleanData where MAX in (Select MAX(MAX) from cleanData where MAX <>9999.9 and LEFT(YEARMODA,4)='2011') and LEFT(YEARMODA,4) ='2011' ").show()
++------+----+----+-----+
+|   STN|YEAR|DATE|  MAX|
++------+----+----+-----+
+|720293|2011|  13|131.0|
++------+----+----+-----+
+
+>>> spark.sql("SELECT distinct(STN), LEFT(YEARMODA,4) as YEAR, RIGHT(YEARMODA,2) as DATE, MIN from cleanData where MIN in (Select MIN(MIN) from cleanData where MIN <>9999.9 and LEFT(YEARMODA,4)='2011') and LEFT(YEARMODA,4) ='2011' ").show()
++------+----+----+------+
+|   STN|YEAR|DATE|   MIN|
++------+----+----+------+
+|897340|2011|  17|-111.8|
+
+>>> spark.sql("SELECT distinct(STN), LEFT(YEARMODA,4) as YEAR, RIGHT(YEARMODA,2) as DATE, MAX from cleanData where MAX in (Select MAX(MAX) from cleanData where MAX <>9999.9 and LEFT(YEARMODA,4)='2012') and LEFT(YEARMODA,4) ='2012' ").show()
++------+----+----+-----+
+|   STN|YEAR|DATE|  MAX|
++------+----+----+-----+
+|722577|2012|  12|132.8|
++------+----+----+-----+
+
+>>> spark.sql("SELECT distinct(STN), LEFT(YEARMODA,4) as YEAR, RIGHT(YEARMODA,2) as DATE, MIN from cleanData where MIN in (Select MIN(MIN) from cleanData where MIN <>9999.9 and LEFT(YEARMODA,4)='2012') and LEFT(YEARMODA,4) ='2012' ").show()
++------+----+----+------+
+|   STN|YEAR|DATE|   MIN|
++------+----+----+------+
+|896060|2012|  16|-119.6|
++------+----+----+------+
+
+>>> spark.sql("SELECT distinct(STN), LEFT(YEARMODA,4) as YEAR, RIGHT(YEARMODA,2) as DATE, MAX from cleanData where MAX in (Select MAX(MAX) from cleanData where MAX <>9999.9 and LEFT(YEARMODA,4)='2013') and LEFT(YEARMODA,4) ='2013' ").show()
++------+----+----+-----+
+|   STN|YEAR|DATE|  MAX|
++------+----+----+-----+
+|406890|2013|  12|132.8|
+
+>>> spark.sql("SELECT distinct(STN), LEFT(YEARMODA,4) as YEAR, RIGHT(YEARMODA,2) as DATE, MIN from cleanData where MIN in (Select MIN(MIN) from cleanData where MIN <>9999.9 and LEFT(YEARMODA,4)='2013') and LEFT(YEARMODA,4) ='2013' ").show()
++------+----+----+------+
+|   STN|YEAR|DATE|   MIN|
++------+----+----+------+
+|895770|2013|  30|-115.1|
+|895770|2013|  31|-115.1|
++------+----+----+------+
+
+>>> spark.sql("SELECT distinct(STN), LEFT(YEARMODA,4) as YEAR, RIGHT(YEARMODA,2) as DATE, MAX from cleanData where MAX in (Select MAX(MAX) from cleanData where MAX <>9999.9 and LEFT(YEARMODA,4)='2014') and LEFT(YEARMODA,4) ='2014' ").show()
++------+----+----+-----+
+|   STN|YEAR|DATE|  MAX|
++------+----+----+-----+
+|406650|2014|  03|129.6|
++------+----+----+-----+
+>>> spark.sql("SELECT distinct(STN), LEFT(YEARMODA,4) as YEAR, RIGHT(YEARMODA,2) as DATE, MIN from cleanData where MIN in (Select MIN(MIN) from cleanData where MIN <>9999.9 and LEFT(YEARMODA,4)='2014') and LEFT(YEARMODA,4) ='2014' ").show()
++------+----+----+------+
+|   STN|YEAR|DATE|   MIN|
++------+----+----+------+
+|896060|2014|  21|-113.4|
++------+----+----+------+
+
+
+>>> spark.sql("SELECT distinct(STN), LEFT(YEARMODA,4) as YEAR, RIGHT(YEARMODA,2) as DATE,MAX from cleanData where MAX = (Select MAX(MAX) from cleanData where MAX <>9999.9)and LEFT(YEARMODA,4)=2015").show()
+Hive Session ID = 1ec695cf-c631-42b2-958b-de2bd6e9fe4a
++------+----+----+-----+
+|   STN|YEAR|DATE|  MAX|
++------+----+----+-----+
+|916700|2015|  21|132.4|
++------+----+----+-----+
+
+>>> spark.sql("SELECT distinct(STN), LEFT(YEARMODA,4) as YEAR, RIGHT(YEARMODA,2) as DATE, MIN from cleanData where Min in (Select MIN(MIN) from cleanData where Min <>9999.9 and LEFT(YEARMODA,4)='2015') and LEFT(YEARMODA,4) ='2015' ").show()
++------+----+----+------+
+|   STN|YEAR|DATE|   MIN|
++------+----+----+------+
+|895770|2015|  17|-114.2|
+|896060|2015|  22|-114.2|
++------+----+----+------+
+
+>>> spark.sql("SELECT distinct(STN), LEFT(YEARMODA,4) as YEAR, RIGHT(YEARMODA,2) as DATE, MAX from cleanData where MAX in (Select MAX(MAX) from cleanData where MAX <>9999.9 and LEFT(YEARMODA,4)='2016') and LEFT(YEARMODA,4) ='2016' ").show()
++------+----+----+-----+
+|   STN|YEAR|DATE|  MAX|
++------+----+----+-----+
+|700638|2016|  22|129.0|
++------+----+----+-----+
+
+>>> spark.sql("SELECT distinct(STN), LEFT(YEARMODA,4) as YEAR, RIGHT(YEARMODA,2) as DATE, MIN from cleanData where Min in (Select MIN(MIN) from cleanData where Min <>9999.9 and LEFT(YEARMODA,4)='2016') and LEFT(YEARMODA,4) ='2016' ").show()
++------+----+----+------+
+|   STN|YEAR|DATE|   MIN|
++------+----+----+------+
+|896060|2016|  12|-115.1|
++------+----+----+------+
+>>> spark.sql("SELECT distinct(STN), LEFT(YEARMODA,4) as YEAR, RIGHT(YEARMODA,2) as DATE, MAX from cleanData where MAX in (Select MAX(MAX) from cleanData where MAX <>9999.9 and LEFT(YEARMODA,4)='2017') and LEFT(YEARMODA,4) ='2017' ").show()
++------+----+----+-----+
+|   STN|YEAR|DATE|  MAX|
++------+----+----+-----+
+|917430|2017|  10|129.6|
++------+----+----+-----+
+
+>>> spark.sql("SELECT distinct(STN), LEFT(YEARMODA,4) as YEAR, RIGHT(YEARMODA,2) as DATE, MIN from cleanData where Min in (Select MIN(MIN) from cleanData where Min <>9999.9 and LEFT(YEARMODA,4)='2017') and LEFT(YEARMODA,4) ='2017' ").show()
++------+----+----+------+
+|   STN|YEAR|DATE|   MIN|
++------+----+----+------+
+|896250|2017|  20|-116.0|
++------+----+----+------+
+
+spark.sql("SELECT distinct(STN), LEFT(YEARMODA,4) as YEAR, RIGHT(YEARMODA,2) as DATE, MAX from cleanData where MAX in (Select MAX(MAX) from cleanData where MAX <>9999.9 and LEFT(YEARMODA,4)='2018') and LEFT(YEARMODA,4) ='2018' ").show()
++------+----+----+-----+
+|   STN|YEAR|DATE|  MAX|
++------+----+----+-----+
+|408110|2018|  02|126.3|
++------+----+----+-----+
+
+>>> spark.sql("SELECT distinct(STN), LEFT(YEARMODA,4) as YEAR, RIGHT(YEARMODA,2) as DATE, MIN from cleanData where Min in (Select MIN(MIN) from cleanData where Min <>9999.9 and LEFT(YEARMODA,4)='2018') and LEFT(YEARMODA,4) ='2018' ").show()
++------+----+----+------+
+|   STN|YEAR|DATE|   MIN|
++------+----+----+------+
+|896060|2018|  28|-116.3|
++------+----+----+------+
+
+spark.sql("SELECT distinct(STN), LEFT(YEARMODA,4) as YEAR, RIGHT(YEARMODA,2) as DATE, MAX from cleanData where MAX in (Select MAX(MAX) from cleanData where MAX <>9999.9 and LEFT(YEARMODA,4)='2019') and LEFT(YEARMODA,4) ='2019' ").show()
++------+----+----+-----+
+|   STN|YEAR|DATE|  MAX|
++------+----+----+-----+
+|956660|2019|  24|121.1|
++------+----+----+-----+
+
+spark.sql("SELECT distinct(STN), LEFT(YEARMODA,4) as YEAR, RIGHT(YEARMODA,2) as DATE, MIN from cleanData where Min in (Select MIN(MIN) from cleanData where Min <>9999.9 and LEFT(YEARMODA,4)='2019') and LEFT(YEARMODA,4) ='2019' ").show()
++------+----+----+------+
+|   STN|YEAR|DATE|   MIN|
++------+----+----+------+
+|896060|2019|  05|-102.1|
++------+----+----+------+
+
+*********************************************************************************************************************************************
+2. Find the hottest and coldest day across all years (2010 - 2019) along with station code and date.
+
+>>> spark.sql("SELECT distinct(STN), LEFT(YEARMODA,4) as YEAR, RIGHT(YEARMODA,2) as DATE, MAX from cleanData where MAX IN(SELECT MAX(MAX) FROM cleanData where MAX <> 9999.9) ").show()
++------+----+----+-----+
+|   STN|YEAR|DATE|  MAX|
++------+----+----+-----+
+|722577|2012|  12|132.8|
+|406890|2013|  12|132.8|
+|720667|2010|  23|132.8|
++------+----+----+-----+
+
+
+>>> spark.sql("SELECT distinct(STN), LEFT(YEARMODA,4) as YEAR, RIGHT(YEARMODA,2) as DATE, MIN from cleanData where MIN IN(SELECT MIN(MIN) FROM cleanData where MIN <> 9999.9) ").show()
++------+----+----+------+
+|   STN|YEAR|DATE|   MIN|
++------+----+----+------+
+|896060|2012|  16|-119.6|
+
+*******************************************************************************************************************************************
+3. Maximum and minimum precipitation with station code and date for year 2015.
+>>> max=spark.sql("Select STN,RIGHT(YEARMODA,2) as DATE, LEFT(YEARMODA,4) as YEAR, PRCP  from cleanData1 where PRCP in (SELECT MAX(PRCP) from cleanData1 where PRCP <>'99.99')")
+>>> max.show()
++------+----+----+----+
+|   STN|DATE|YEAR|PRCP|
++------+----+----+----+
+|983340|  16|2015|9.92|
+|645510|  23|2015|9.92|
+|419890|  24|2015|9.92|
+|418621|  21|2015|9.92|
++------+----+----+----+
+
+>>> min=spark.sql("Select STN,RIGHT(YEARMODA,2) as DATE, LEFT(YEARMODA,4) as YEAR, PRCP  from cleanData1 where PRCP in (SELECT MIN(PRCP) from cleanData1 where PRCP <>'99.99')")
+>>> min.show()
++------+----+----+----+
+|   STN|DATE|YEAR|PRCP|
++------+----+----+----+
+|999999|  01|2015|0.00|
+|999999|  02|2015|0.00|
+|999999|  03|2015|0.00|
+|999999|  04|2015|0.00|
+|999999|  05|2015|0.00|
+|999999|  06|2015|0.00|
+|999999|  07|2015|0.00|
+|999999|  08|2015|0.00|
+|999999|  09|2015|0.00|
+|999999|  10|2015|0.00|
+|999999|  11|2015|0.00|
+|999999|  12|2015|0.00|
+|999999|  13|2015|0.00|
+|999999|  14|2015|0.00|
+|999999|  15|2015|0.00|
+|999999|  16|2015|0.00|
+|999999|  17|2015|0.00|
+|999999|  18|2015|0.00|
+|999999|  19|2015|0.00|
+|999999|  20|2015|0.00|
++------+----+----+----+
+only showing top 20 rows
+
+*******************************************************************************************************************************************
+4. Count percentage missing values for mean station pressure (STP) for year 2019 and stations.
+>>> missingDataframe=cleanData.where("STP='9999.9'")
+>>> missing=(float)(missingDataframe.count())
+>>> total=(float)(cleanData.count())
+>>> type(total)
+<type 'float'>
+>>> percentage=(missing*100)/(total)
+>>> print(percentage)
+27.961149261
+
+*******************************************************************************************************************************************
+5.Station code with maximum wind gust and date for year 2019 
+>>> spark.sql("Select STN,RIGHT(YEARMODA,2)as DATE,LEFT(YEARMODA,4) as YEAR,GUST from cleanData where GUST in (Select MAX(GUST) from cleanData where GUST <>'999.9')").show()
++------+----+----+----+
+|   STN|DATE|YEAR|GUST|
++------+----+----+----+
+|726130|  25|2019|99.1|
++------+----+----+----+
